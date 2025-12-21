@@ -25,41 +25,8 @@
       <a href="#menu">Menu</a>
     </nav>
 
-    <div class="nav-cta">
-      <button class="btn" id="themeBtn" type="button" title="Vaihda teemaa">
-        Theme
-      </button>
-
-      <button class="menu-btn" id="menuBtn" type="button" aria-label="Avaa valikko">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M4 7h16M4 12h16M4 17h16"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"/>
-        </svg>
-      </button>
-
-    </div>
   </div>
 </header>
-
-<!-- Mobile Drawer -->
-<div class="drawer" id="drawer" aria-hidden="true">
-  <dialog class="drawer-panel" aria-modal="true" aria-label="Mobiilivalikko">
-    <div class="drawer-top">
-      <div class="brand" style="gap:10px">
-        <span class="mark" aria-hidden="true" style="width:34px;height:34px;border-radius:12px"></span>
-        <span style="font-weight:800">Mete’s Palace</span>
-      </div>
-      <button class="btn" id="closeDrawer" type="button">Sulje</button>
-    </div>
-    <a href="#menu" class="drawer-link">Menu</a>
-    <div class="divider"></div>
-    <button class="btn btn-primary" id="drawerReserveBtn" type="button">
-      Varaa pöytä
-    </button>
-  </dialog>
-</div>
 
 <main id="top">
 
@@ -74,9 +41,9 @@
           </p>
 
           <div class="hero-actions">
-            <a class="btn" href="#menu">
+            <button class="btn" id="scrollMenuBtn" type="button">
               Näytä menu
-            </a>
+            </button>
             <button class="btn btn-primary" id="reserveBtn" type="button">
               Tee pöytävaraus
             </button>
@@ -106,23 +73,9 @@
           <div class="row"><span>Pe</span><b>5:45–21:30</b></div>
           <div class="row"><span>La</span><b>5:45–22:30</b></div>
           <div class="row"><span>Su</span><b>5:45–21:30</b></div>
-          <div class="row"><span>Tila</span><span class="open" id="openStatus">Tarkistetaan…</span></div>
+          <div class="row"><span class="open" id="openStatus">Tarkistetaan…</span></div>
         </div>
 
-        <h3 class="table-reserve">Varaa pöytä</h3>
-        <div class="reserve">
-          <div class="field">
-            <label for="name">Varaajan nimi</label>
-            <input id="name" placeholder="Nimi"/>
-          </div>
-          <div class="field">
-            <label for="time">Varausaika</label>
-            <input id="time" placeholder="18:30"/>
-          </div>
-          <button class="btn btn-primary" id="reserveSubmit" type="button">
-            Lähetä varaus
-          </button>
-        </div>
       </aside>
     </div>
   </section>
@@ -206,16 +159,16 @@
                 <b>Talon Lämmin Suklaabrownie & Vaniljajäätelö</b>
                 <small>Syvä tumma suklaa, mehevä voi, aito vanilja, pehmeä vaniljajäätelö, ripaus merisuolaa.</small>
               </div>
-              <span class="price">€9</span>
+              <span class="price">€22</span>
             </div>
 
             <div class="menu-item">
               <div>
-                <b>Talon Glögi–Pipariparfait</b>
-                <small>Mausteinen glögi, murennettu pipari, pehmeä vaniljakerma</small>
+                <b>Paahdettu Suklaamousse & Vadelma-Verjus</b>
+                <small>Ilmava paahdetusta tummasta suklaasta valmistettu mousse, hapan vadelma-verjus, mantelirouhe, kaakao-tuile, vaniljalla maustettu jogurttivaahto.</small>
               </div>
               <span class="sold-out">LOPPU!</span>
-              <span class="price">€10</span>
+              <span class="price">€19</span>
             </div>
 
             <div class="menu-item">
@@ -223,17 +176,17 @@
                 <b>Klassinen Banana Split Deluxe</b>
                 <small>Tuore banaani, vanilja- ja suklaajäätelö, suklaakastike, kermavaahto ja pähkinärouhe</small>
               </div>
-              <span class="price">€10</span>
+              <span class="price">€16</span>
             </div>
 
 
             <div class="menu-item">
               <div>
-                <b>Glögimarjasorbetti</b>
-                <small>Mausteinen glögi, tuoreet marjat ja raikas sorbettipohja</small>
+                <b>Kataifi-Sahramiparfait & Kuusenkerkkäemulsio</b>
+                <small>Paahdettua kataifi-taikinaa, sahramilla maustettua parfait’ta, kuusenkerkkäemulsiota, fermentoitua lakkaa, valkosuklaacrumble, kullanhohtoinen hunajakaramelli.</small>
               </div>
               <span class="sold-out">LOPPU!</span>
-              <span class="price">€8</span>
+              <span class="price">€22</span>
             </div>
           </div>
         </div>
@@ -241,7 +194,23 @@
 
       <div class="divider"></div>
     </div>
+
+    <div class="reserve" style="margin: 200px 0px">
+      <h3 class="table-reserve">Varaa pöytä</h3>
+      <div class="field" id="reserveSection" >
+        <label for="name">Varaajan nimi</label>
+        <input id="name" placeholder="Nimi"/>
+      </div>
+      <div class="field">
+        <label for="time">Varausaika</label>
+        <input id="time" type="time" lang="fi" min="00:00" max="23:59" step="60">
+      </div>
+      <button class="btn btn-primary" id="reserveSubmit" type="button">
+        Lähetä varaus
+      </button>
+    </div>
   </section>
+
 
 </main>
 

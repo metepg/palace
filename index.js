@@ -33,7 +33,9 @@ function showToast(title, msg) {
   toastMsg.textContent = msg;
   toast.style.display = "block";
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toast.style.display = "none", 60000);
+  toastTimer = setTimeout(() => toast.style.display = "none", 10000);
+  $("name").value = "";
+  $("time").value = "";
 }
 
 toastClose.addEventListener("click", () => toast.style.display = "none");
@@ -46,12 +48,19 @@ function submitReservation() {
 }
 
 $("reserveBtn")?.addEventListener("click", () => {
-  document.querySelector("#visit")?.scrollIntoView({ behavior: "smooth" });
+  document.querySelector("#reserveSection")
+    ?.scrollIntoView({ behavior: "smooth" });
 });
 
 $("drawerReserveBtn")?.addEventListener("click", () => {
   hideDrawer();
-  document.querySelector("#visit")?.scrollIntoView({ behavior: "smooth" });
+  document.querySelector("#reserveSection")
+    ?.scrollIntoView({ behavior: "smooth" });
+});
+
+$("scrollMenuBtn")?.addEventListener("click", () => {
+  document.querySelector("#menu")
+    ?.scrollIntoView({ behavior: "smooth" });
 });
 
 $("reserveSubmit")?.addEventListener("click", submitReservation);
@@ -83,8 +92,8 @@ function setOpenStatus() {
   const isOpen = nowMin >= minutes(open) && nowMin < minutes(close);
 
   $("openStatus").textContent = isOpen
-    ? `Auki nyt (sulkeutuu ${close})`
-    : `Suljettu (avaa ${open})`;
+    ? `Auki nyt (Sulkeutuu ${close})`
+    : `Suljettu (Avataan ${open})`;
 
   $("openBadge").textContent = isOpen ? "Auki" : "Suljettu";
   $("openBadge").style.borderColor = isOpen

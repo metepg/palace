@@ -53,14 +53,15 @@ html, body {
   font-size: 1.5rem;
   display: none;
 }
-body.reveal > *:not(#gate) {
-  animation: reveal 4s ease forwards;
+body.reveal > *:not(#gate):not(.toast) {
+  animation: reveal 5s ease forwards;
 }
 
 @keyframes reveal {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
+
 
 #gate input {
   width: 100%;
@@ -394,7 +395,7 @@ h1 {
   padding: 18px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 18px;
   position: relative;
 }
 
@@ -533,7 +534,7 @@ section {
 
 .card h4 {
   margin: 0 0 8px;
-  font-size: 15px;
+  font-size: 18px;
 }
 
 .card p {
@@ -592,6 +593,13 @@ b, small {
   white-space: nowrap;
   font-size: 13px;
   margin-top: 2px;
+}
+
+.menu-item:has(.sold-out) > div {
+  text-decoration: line-through;
+  opacity: 0.6;
+  text-decoration-color: rgba(255, 255, 255, 0.55);
+  text-decoration-thickness: 1px;
 }
 
 /* Footer */

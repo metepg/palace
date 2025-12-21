@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="fi">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Mete’s Palace</title>
+  <meta name="description" content="Mete’s Palace — viihtyisää, joulutunnelmaista ruokailua."/>
+  <link rel="stylesheet" href="./index.css">
+  <script src="./index.js" defer></script>
+</head>
+
+<body>
+<div id="gate">
+  <input id="gateInput" type="password" placeholder="Salasana" autofocus />
+  <div id="gateError">Väärä salasana</div>
+</div>
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="#top" aria-label="Mete’s Palace etusivu">
+      <span class="mark" aria-hidden="true"></span>
+      <span>Mete’s Palace</span>
+    </a>
+
+    <nav class="nav-links" aria-label="Päävalikko">
+      <a href="#menu">Menu</a>
+    </nav>
+
+    <div class="nav-cta">
+      <button class="btn" id="themeBtn" type="button" title="Vaihda teemaa">
+        Theme
+      </button>
+
+      <button class="menu-btn" id="menuBtn" type="button" aria-label="Avaa valikko">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"/>
+        </svg>
+      </button>
+
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Drawer -->
+<div class="drawer" id="drawer" aria-hidden="true">
+  <dialog class="drawer-panel" aria-modal="true" aria-label="Mobiilivalikko">
+    <div class="drawer-top">
+      <div class="brand" style="gap:10px">
+        <span class="mark" aria-hidden="true" style="width:34px;height:34px;border-radius:12px"></span>
+        <span style="font-weight:800">Mete’s Palace</span>
+      </div>
+      <button class="btn" id="closeDrawer" type="button">Sulje</button>
+    </div>
+    <a href="#menu" class="drawer-link">Menu</a>
+    <div class="divider"></div>
+    <button class="btn btn-primary" id="drawerReserveBtn" type="button">
+      Varaa pöytä
+    </button>
+  </dialog>
+</div>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-card">
+        <div class="hero-main">
+          <span class="pill"><span class="dot"></span> Viihtyisää jouluruokailua</span>
+          <h1>Mete’s Palace</h1>
+          <p class="sub">
+            Lämmin ja juhlava paikka romanttiselle ruoalle sekä hyvälle seuralle.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn" href="#menu">
+              Näytä menu
+            </a>
+            <button class="btn btn-primary" id="reserveBtn" type="button">
+              Tee pöytävaraus
+            </button>
+          </div>
+
+          <div class="meta-row">
+            <span class="meta-chip">
+              <span class="dot" style="background:var(--gold)"></span>Sesongin erikoisuudet</span>
+            <span class="meta-chip">
+              <span class="dot"></span>Takkatunnelmaa</span>
+            <span class="meta-chip">
+              <span class="dot" style="background:#6ee7b7"></span>Kasvisvaihtoehtoja</span>
+          </div>
+
+          <div class="divider"></div>
+        </div>
+      </div>
+
+      <aside class="hero-card hero-side" aria-label="Pikatiedot">
+        <div class="side-title">
+          <h2 id="visit">Aukioloajat</h2>
+          <span class="badge" id="openBadge">Auki</span>
+        </div>
+
+        <div class="hours" id="hoursBox">
+          <div class="row"><span>Ma–To</span><b>5:45–21:00</b></div>
+          <div class="row"><span>Pe</span><b>5:45–21:30</b></div>
+          <div class="row"><span>La</span><b>5:45–22:30</b></div>
+          <div class="row"><span>Su</span><b>5:45–21:30</b></div>
+          <div class="row"><span>Tila</span><span class="open" id="openStatus">Tarkistetaan…</span></div>
+        </div>
+
+        <h3 class="table-reserve">Varaa pöytä</h3>
+        <div class="reserve">
+          <div class="field">
+            <label for="name">Varaajan nimi</label>
+            <input id="name" placeholder="Nimi"/>
+          </div>
+          <div class="field">
+            <label for="time">Varausaika</label>
+            <input id="time" placeholder="18:30"/>
+          </div>
+          <button class="btn btn-primary" id="reserveSubmit" type="button">
+            Lähetä varaus
+          </button>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+
+  <section id="menu">
+    <div class="container">
+      <div class="section-head">
+        <h2>Menu</h2>
+      </div>
+
+      <div class="grid3">
+        <div class="card">
+          <div class="card-inner">
+            <h4 style="text-align: center">Alkuruoat</h4>
+
+            <div class="menu-item">
+              <div>
+                <b>Le Véritable Patonki</b>
+                <small>Basilikaöljy, hapanjuurileipä</small>
+              </div>
+              <span class="price">€8</span>
+            </div>
+
+            <div class="menu-item">
+              <div>
+                <b>Pähkinäinen Sitrustalvisalaatti</b>
+                <small>Tomaatti, sitrushedelmät, paahdetut pähkinät</small>
+              </div>
+              <span class="price">€10</span>
+            </div>
+
+            <div class="menu-item">
+              <div>
+                <b>Valkoviinissä Höyrytetyt Kampasimpukat</b>
+                <small>Tuoreet simpukat, aromaattinen valkoviini, valkosipuli, salottisipuli, tuoreet yrtit</small>
+              </div>
+              <span class="sold-out">LOPPU!</span>
+              <span class="price">€18</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-inner">
+            <h4 style="text-align: center">Pääruoat</h4>
+
+            <div class="menu-item">
+              <div>
+                <b>Perinteinen Talon Kanakeitto</b>
+                <small>Hitaasti haudutettu kana, kauden vihannekset, täyteläinen kermaliemi</small>
+              </div>
+              <span class="price">€18</span>
+            </div>
+
+            <div class="menu-item">
+              <div>
+                <b>Lasagne al Forno Della Casa</b>
+                <small>Murea jauhelihakastike, pastalevyt, béchamel, gratinoitu juusto</small>
+              </div>
+              <span class="price">€21</span>
+            </div>
+
+            <div class="menu-item">
+              <div>
+                <b>Kermainen Sienipasta</b>
+                <small>Paahdetut sienet, samettinen kermakastike, tuoreet yrtit</small>
+              </div>
+              <span class="sold-out">LOPPU!</span>
+              <span class="price">€17</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-inner">
+            <h4 style="text-align: center">Jälkiruoat</h4>
+
+            <div class="menu-item">
+              <div>
+                <b>Talon Lämmin Suklaabrownie & Vaniljajäätelö</b>
+                <small>Syvä tumma suklaa, mehevä voi, aito vanilja, pehmeä vaniljajäätelö, ripaus merisuolaa.</small>
+              </div>
+              <span class="price">€9</span>
+            </div>
+
+            <div class="menu-item">
+              <div>
+                <b>Talon Glögi–Pipariparfait</b>
+                <small>Mausteinen glögi, murennettu pipari, pehmeä vaniljakerma</small>
+              </div>
+              <span class="sold-out">LOPPU!</span>
+              <span class="price">€10</span>
+            </div>
+
+            <div class="menu-item">
+              <div>
+                <b>Klassinen Banana Split Deluxe</b>
+                <small>Tuore banaani, vanilja- ja suklaajäätelö, suklaakastike, kermavaahto ja pähkinärouhe</small>
+              </div>
+              <span class="price">€10</span>
+            </div>
+
+
+            <div class="menu-item">
+              <div>
+                <b>Glögimarjasorbetti</b>
+                <small>Mausteinen glögi, tuoreet marjat ja raikas sorbettipohja</small>
+              </div>
+              <span class="sold-out">LOPPU!</span>
+              <span class="price">€8</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container footer-grid">
+    <div class="brand" style="gap:10px">
+      <span class="mark" aria-hidden="true" style="width:32px;height:32px;border-radius:12px"></span>
+      <span style="font-weight:800">Mete’s Palace</span>
+    </div>
+    <div>© <span id="year"></span> Mete’s Palace. Kaikki oikeudet pidätetään.</div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status">
+  <div class="toast-inner">
+    <div>
+      <strong id="toastTitle">Tallennettu</strong>
+      <p id="toastMsg">Toiminto suoritettu.</p>
+    </div>
+    <button class="close" id="toastClose" type="button">Sulje</button>
+  </div>
+</div>
+
+</body>
+</html>

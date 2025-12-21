@@ -132,20 +132,27 @@ nameInput.addEventListener("input", updateSubmitState);
 timeInput.addEventListener("input", updateSubmitState);
 updateSubmitState();
 
-/* ================= GATE (FIXED) ================= */
+/* ================= GATE (AUTO) ================= */
 const gate = $("gate");
 const gateInput = $("gateInput");
 const gateError = $("gateError");
-const gateOk = $("gateOk");
 
 let gateErrorTimer = null;
+const PASSWORD = "testi";
 
-function handleGate() {
-  if (gateInput.value === "testi") {
-    document.body.classList.add("reveal");
-    gate.classList.add("fade-out");
-    setTimeout(() => gate.remove(), 500);
-  } else {
+function unlockGate() {
+  document.body.classList.add("reveal");
+  gate.classList.add("fade-out");
+  setTimeout(() => gate.remove(), 500);
+}
+
+gateInput.addEventListener("input", () => {
+  if (gateInput.value === PASSWORD) {
+    unlockGate();
+    return;
+  }
+
+  if (gateInput.value.length >= PASSWORD.length) {
     gateError.style.display = "block";
     gateInput.value = "";
     clearTimeout(gateErrorTimer);
@@ -153,10 +160,4 @@ function handleGate() {
       gateError.style.display = "none";
     }, 5000);
   }
-}
-
-gateInput.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") handleGate();
 });
-
-gateOk.addEventListener("click", handleGate);

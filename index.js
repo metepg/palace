@@ -1,5 +1,6 @@
 const $ = (id) => document.getElementById(id);
 
+/* ================= Drawer ================= */
 const drawer = $("drawer");
 const menuBtn = $("menuBtn");
 const closeDrawer = $("closeDrawer");
@@ -20,7 +21,7 @@ drawer?.addEventListener("click", (e) => {
   if (e.target === drawer) hideDrawer();
 });
 
-// Toast
+/* ================= Toast ================= */
 const toast = $("toast");
 const toastTitle = $("toastTitle");
 const toastMsg = $("toastMsg");
@@ -40,7 +41,7 @@ function showToast(title, msg) {
 
 toastClose.addEventListener("click", () => toast.style.display = "none");
 
-// Fake reservation
+/* ================= Reservation ================= */
 function submitReservation() {
   const name = $("name").value.trim() || "Vierailija";
   const time = $("time").value.trim() || "—";
@@ -48,45 +49,40 @@ function submitReservation() {
 }
 
 $("reserveBtn")?.addEventListener("click", () => {
-  document.querySelector("#reserveSection")
-    ?.scrollIntoView({ behavior: "smooth" });
+  $("reserveSection")?.scrollIntoView({ behavior: "smooth" });
 });
 
 $("drawerReserveBtn")?.addEventListener("click", () => {
   hideDrawer();
-  document.querySelector("#reserveSection")
-    ?.scrollIntoView({ behavior: "smooth" });
+  $("reserveSection")?.scrollIntoView({ behavior: "smooth" });
 });
 
 $("scrollMenuBtn")?.addEventListener("click", () => {
-  document.querySelector("#menu")
-    ?.scrollIntoView({ behavior: "smooth" });
+  $("menu")?.scrollIntoView({ behavior: "smooth" });
 });
 
 $("reserveSubmit")?.addEventListener("click", submitReservation);
 
-// Open/closed indicator (local time on client)
+/* ================= Open status ================= */
 function minutes(hm) {
   const [h, m] = hm.split(":").map(Number);
   return h * 60 + m;
 }
 
-// Simple hours map; adjust freely.
 const hours = {
-  1: ["5:45", "21:00"], // Mon
-  2: ["5:45", "21:00"], // Tue
-  3: ["5:45", "21:00"], // Wed
-  4: ["5:45", "21:00"], // Thu
-  5: ["5:45", "21:30"], // Fri
-  6: ["5:45", "22:30"], // Sat
-  0: ["5:45", "21:30"], // Sun
+  1: ["5:45", "21:00"],
+  2: ["5:45", "21:00"],
+  3: ["5:45", "21:00"],
+  4: ["5:45", "21:00"],
+  5: ["5:45", "21:30"],
+  6: ["5:45", "22:30"],
+  0: ["5:45", "21:30"],
 };
 
 function setOpenStatus() {
   const now = new Date();
   const dow = now.getDay();
-  const open = hours[dow][0];
-  const close = hours[dow][1];
+  const [open, close] = hours[dow];
 
   const nowMin = now.getHours() * 60 + now.getMinutes();
   const isOpen = nowMin >= minutes(open) && nowMin < minutes(close);
@@ -96,18 +92,12 @@ function setOpenStatus() {
     : `Suljettu (Avataan ${open})`;
 
   $("openBadge").textContent = isOpen ? "Auki" : "Suljettu";
-  $("openBadge").style.borderColor = isOpen
-    ? "rgba(110,231,183,.25)"
-    : "rgba(193,18,31,.45)";
-  $("openBadge").style.background = isOpen
-    ? "rgba(110,231,183,.08)"
-    : "rgba(193,18,31,.12)";
 }
 
 setOpenStatus();
 setInterval(setOpenStatus, 60_000);
 
-// Theme toggle
+/* ================= Theme ================= */
 let holiday = true;
 $("themeBtn")?.addEventListener("click", () => {
   holiday = !holiday;
@@ -124,73 +114,49 @@ $("themeBtn")?.addEventListener("click", () => {
   );
 });
 
-// Footer year
+/* ================= Footer ================= */
 $("year").textContent = new Date().getFullYear();
 
-// Smooth close drawer on link click
-document.querySelectorAll(".drawer-link").forEach(a => {
-  a.addEventListener("click", () => hideDrawer());
-});
+/* ================= Form validation ================= */
 const nameInput = $("name");
 const timeInput = $("time");
 const submitBtn = $("reserveSubmit");
 
 function updateSubmitState() {
-  const valid =
-    nameInput.value.trim() !== "" &&
-    timeInput.value.trim() !== "";
-  submitBtn.disabled = !valid;
+  submitBtn.disabled =
+    nameInput.value.trim() === "" ||
+    timeInput.value.trim() === "";
 }
 
 nameInput.addEventListener("input", updateSubmitState);
 timeInput.addEventListener("input", updateSubmitState);
+updateSubmitState();
 
-const gate = document.getElementById("gate");
-const gateInput = document.getElementById("gateInput");
-
-gateInput.addEventListener("keydown", (e) => {
-  if (e.key === "Enter" && gateInput.value === "testi") {
-    gate.remove();
-  }
-});
-
-const gateError = document.getElementById("gateError");
+/* ================= GATE (FIXED) ================= */
+const gate = $("gate");
+const gateInput = $("gateInput");
+const gateError = $("gateError");
+const gateOk = $("gateOk");
 
 let gateErrorTimer = null;
 
-gateInput.addEventListener("keydown", (e) => {
-  if (e.key !== "Enter") return;
-
-  if (gateInput.value === "testi") {
-    gate.remove();
-  } else {
-    gateError.style.display = "block";
-    gateInput.value = "";
-
-    clearTimeout(gateErrorTimer);
-    gateErrorTimer = setTimeout(() => {
-      gateError.style.display = "none";
-    }, 5_000);
-  }
-});
-
-gateInput.addEventListener("keydown", (e) => {
-  if (e.key !== "Enter") return;
-
+function handleGate() {
   if (gateInput.value === "testi") {
     document.body.classList.add("reveal");
     gate.classList.add("fade-out");
-    setTimeout(() => gate.remove(), 2000);
+    setTimeout(() => gate.remove(), 500);
   } else {
     gateError.style.display = "block";
     gateInput.value = "";
-
     clearTimeout(gateErrorTimer);
     gateErrorTimer = setTimeout(() => {
       gateError.style.display = "none";
-    }, 10_000);
+    }, 5000);
   }
+}
+
+gateInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") handleGate();
 });
 
-// init on load
-updateSubmitState();
+gateOk.addEventListener("click", handleGate);

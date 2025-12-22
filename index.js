@@ -26,18 +26,18 @@ const toast = $("toast");
 const toastTitle = $("toastTitle");
 const toastMsg = $("toastMsg");
 const toastClose = $("toastClose");
-
-let toastTimer = null;
+const calendarBtn = $("calendarBtn");
 
 function showToast(title, msg) {
   toastTitle.textContent = title;
   toastMsg.textContent = msg;
   toast.style.display = "block";
-  $("name").value = "";
-  $("datetime").value = "";
 }
 
-toastClose.addEventListener("click", () => toast.style.display = "none");
+toastClose.addEventListener("click", () => {
+  toast.style.display = "none";
+  calendarBtn.style.display = "none";
+});
 
 /* ================= Reservation ================= */
 function submitReservation() {
@@ -52,37 +52,34 @@ function submitReservation() {
     `Nimi: ${name} • Aika: ${dt.toLocaleString("fi-FI")}`
   );
 
-  const btn = $("calendarBtn");
-  btn.style.display = "inline-flex";
-  btn.onclick = () => downloadICS(name, dt);
+  calendarBtn.style.display = "inline-flex";
+  calendarBtn.onclick = () => openCalendar(name, dt);
+
+  $("name").value = "";
+  $("datetime").value = "";
+  updateSubmitState();
 }
 
-function downloadICS(name, date) {
+$("reserveSubmit").addEventListener("click", submitReservation);
+
+/* ================= Calendar ================= */
+function openCalendar(name, date) {
   const start = date.toISOString().replace(/[-:]/g, "").split(".")[0];
   const end = new Date(date.getTime() + 60 * 60 * 1000)
     .toISOString()
     .replace(/[-:]/g, "")
     .split(".")[0];
 
-  const ics = `BEGIN:VCALENDAR
-VERSION:2.0
-BEGIN:VEVENT
-SUMMARY:Varaus
-DTSTART:${start}Z
-DTEND:${end}Z
-DESCRIPTION:Varaus nimellä ${name}
-END:VEVENT
-END:VCALENDAR`;
+  const url =
+    "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+    `&text=${encodeURIComponent("Varaus")}` +
+    `&details=${encodeURIComponent("Varaus nimellä " + name)}` +
+    `&dates=${start}Z/${end}Z`;
 
-  const blob = new Blob([ics], { type: "text/calendar" });
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = "varaus.ics";
-  a.click();
+  window.open(url, "_blank");
 }
 
-$("reserveSubmit").addEventListener("click", submitReservation);
-
+/* ================= Scrolling ================= */
 $("reserveBtn")?.addEventListener("click", () => {
   $("reserveSection")?.scrollIntoView({ behavior: "smooth" });
 });
@@ -95,8 +92,6 @@ $("drawerReserveBtn")?.addEventListener("click", () => {
 $("scrollMenuBtn")?.addEventListener("click", () => {
   $("menu")?.scrollIntoView({ behavior: "smooth" });
 });
-
-$("reserveSubmit")?.addEventListener("click", submitReservation);
 
 /* ================= Open status ================= */
 function minutes(hm) {
@@ -167,7 +162,7 @@ nameInput.addEventListener("input", updateSubmitState);
 timeInput.addEventListener("input", updateSubmitState);
 updateSubmitState();
 
-/* ================= GATE (AUTO) ================= */
+/* ================= GATE ================= */
 const gate = $("gate");
 const gateInput = $("gateInput");
 const gateError = $("gateError");

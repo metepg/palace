@@ -33,10 +33,8 @@ function showToast(title, msg) {
   toastTitle.textContent = title;
   toastMsg.textContent = msg;
   toast.style.display = "block";
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toast.style.display = "none", 10000);
   $("name").value = "";
-  $("time").value = "";
+  $("datetime").value = "";
 }
 
 toastClose.addEventListener("click", () => toast.style.display = "none");
@@ -44,9 +42,46 @@ toastClose.addEventListener("click", () => toast.style.display = "none");
 /* ================= Reservation ================= */
 function submitReservation() {
   const name = $("name").value.trim() || "Vierailija";
-  const time = $("time").value.trim() || "—";
-  showToast("Varaus hyväksytty", `Nimi: ${name} • Aika: ${time}`);
+  const dtValue = $("datetime").value;
+  if (!dtValue) return;
+
+  const dt = new Date(dtValue);
+
+  showToast(
+    "Varaus hyväksytty",
+    `Nimi: ${name} • Aika: ${dt.toLocaleString("fi-FI")}`
+  );
+
+  const btn = $("calendarBtn");
+  btn.style.display = "inline-flex";
+  btn.onclick = () => downloadICS(name, dt);
 }
+
+function downloadICS(name, date) {
+  const start = date.toISOString().replace(/[-:]/g, "").split(".")[0];
+  const end = new Date(date.getTime() + 60 * 60 * 1000)
+    .toISOString()
+    .replace(/[-:]/g, "")
+    .split(".")[0];
+
+  const ics = `BEGIN:VCALENDAR
+VERSION:2.0
+BEGIN:VEVENT
+SUMMARY:Varaus
+DTSTART:${start}Z
+DTEND:${end}Z
+DESCRIPTION:Varaus nimellä ${name}
+END:VEVENT
+END:VCALENDAR`;
+
+  const blob = new Blob([ics], { type: "text/calendar" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "varaus.ics";
+  a.click();
+}
+
+$("reserveSubmit").addEventListener("click", submitReservation);
 
 $("reserveBtn")?.addEventListener("click", () => {
   $("reserveSection")?.scrollIntoView({ behavior: "smooth" });
@@ -119,7 +154,7 @@ $("year").textContent = new Date().getFullYear();
 
 /* ================= Form validation ================= */
 const nameInput = $("name");
-const timeInput = $("time");
+const timeInput = $("datetime");
 const submitBtn = $("reserveSubmit");
 
 function updateSubmitState() {

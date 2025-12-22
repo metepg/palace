@@ -196,15 +196,22 @@
       <div class="divider"></div>
     </div>
 
-    <div class="reserve" style="margin: 200px 0px">
+    <div class="reserve" id="reserveSection" style="margin: 200px 0px">
       <h3 class="table-reserve">Varaa pöytä</h3>
-      <div class="field" id="reserveSection" >
-        <label for="name">Varaajan nimi</label>
-        <input id="name" placeholder="Nimi"/>
-      </div>
+
       <div class="field">
-        <label for="time">Varausaika</label>
-        <input id="time" type="time" lang="fi" min="00:00" max="23:59" step="60">
+        <label for="name">Varaajan nimi</label>
+        <input id="name" placeholder="Nimi" />
+      </div>
+
+      <div class="field">
+        <label for="datetime">Varausaika</label>
+        <input
+          id="datetime"
+          type="datetime-local"
+          lang="fi"
+          step="60"
+        />
       </div>
       <button class="btn btn-primary" id="reserveSubmit" type="button">
         Lähetä varaus
@@ -228,8 +235,16 @@
 <div class="toast" id="toast" role="status">
   <div class="toast-inner">
     <div>
-      <strong id="toastTitle">Tallennettu</strong>
-      <p id="toastMsg">Toiminto suoritettu.</p>
+      <strong id="toastTitle"></strong>
+      <p id="toastMsg"></p>
+      <button
+        class="btn btn btn-primary"
+        id="calendarBtn"
+        type="button"
+        style="margin-top:8px; display:none"
+      >
+        Lisää kalenteriin
+      </button>
     </div>
     <button class="close" id="toastClose" type="button">Sulje</button>
   </div>

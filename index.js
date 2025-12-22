@@ -39,6 +39,15 @@ toastClose.addEventListener("click", () => {
   calendarBtn.style.display = "none";
 });
 
+// Add this to your index.js inside the Toast section
+window.addEventListener("click", (e) => {
+  if (e.target === toast) {
+    toast.style.display = "none";
+    calendarBtn.style.display = "none";
+  }
+});
+
+/* ================= Reservation ================= */
 /* ================= Reservation ================= */
 function submitReservation() {
   const name = $("name").value.trim() || "Vierailija";
@@ -46,20 +55,38 @@ function submitReservation() {
   if (!dtValue) return;
 
   const dt = new Date(dtValue);
+  const formattedTime = dt.toLocaleString("fi-FI", {
+    day: "numeric",
+    month: "numeric",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit"
+  });
 
-  showToast(
-    "Varaus hyväksytty",
-    `Nimi: ${name} • Aika: ${dt.toLocaleString("fi-FI")}`
-  );
+  // Vertical stacked message content
+  const stackedMsg = `
+    <div style="margin-top: 10px;">
+      <span class="toast-label">Varaajan nimi</span>
+      <span class="toast-value" style="display: block; font-size: 1.1rem; font-weight: bold;">${name}</span>
+    </div>
+    <div style="margin-top: 10px;">
+      <span class="toast-label">Aika</span>
+      <span class="toast-value" style="display: block; font-size: 1.1rem; font-weight: bold;">${formattedTime}</span>
+    </div>
+  `;
+
+  toastTitle.textContent = "Varaus hyväksytty";
+  toastMsg.innerHTML = stackedMsg;
+  toast.style.display = "block";
 
   calendarBtn.style.display = "inline-flex";
   calendarBtn.onclick = () => openCalendar(name, dt);
 
+  // Clear inputs
   $("name").value = "";
   $("datetime").value = "";
   updateSubmitState();
 }
-
 $("reserveSubmit").addEventListener("click", submitReservation);
 
 /* ================= Calendar ================= */

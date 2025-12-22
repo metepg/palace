@@ -232,23 +232,28 @@
   </div>
 </footer>
 
-<div class="toast" id="toast" role="status">
+<div class="toast" id="toast" role="dialog" aria-modal="true">
   <div class="toast-inner">
+    <div id="modalIcon" class="tree-container">
+      🎄
+      <span class="star s1">✦</span>
+      <span class="star s2">✦</span>
+      <span class="star s3">✦</span>
+      <span class="star s4">✦</span>
+      <span class="star s5">✦</span>
+    </div>
+
     <div>
       <strong id="toastTitle"></strong>
-      <p id="toastMsg"></p>
-      <button
-        class="btn btn btn-primary"
-        id="calendarBtn"
-        type="button"
-        style="margin-top:8px; display:none"
-      >
-        Lisää kalenteriin
-      </button>
+      <div id="toastMsg"></div>
     </div>
+
+    <button class="btn btn-primary" id="calendarBtn" type="button" style="display:none">
+      Lisää kalenteriin
+    </button>
+
     <button class="close" id="toastClose" type="button">Sulje</button>
   </div>
 </div>
-
 </body>
 </html>

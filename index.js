@@ -64,16 +64,20 @@ $("reserveSubmit").addEventListener("click", submitReservation);
 
 /* ================= Calendar ================= */
 function openCalendar(name, date) {
-  const start = date.getTime();
-  const end = start + 60 * 60 * 1000;
+  const start = date.toISOString().replace(/[-:]/g, "").split(".")[0];
+  const end = new Date(date.getTime() + 60 * 60 * 1000)
+    .toISOString()
+    .replace(/[-:]/g, "")
+    .split(".")[0];
 
-  window.location.href = "intent://calendar/event?" +
-    "action=android.intent.action.INSERT" +
-    `&title=${encodeURIComponent("Varaus")}` +
-    `&description=${encodeURIComponent("Varaus nimellä " + name)}` +
-    `&beginTime=${start}` +
-    `&endTime=${end}` +
-    "#Intent;scheme=content;package=com.android.calendar;end";}
+  const url =
+    "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+    `&text=${encodeURIComponent("Pöytävaraus Mete's Palace")}` +
+    `&details=${encodeURIComponent("Varaus nimellä " + name)}` +
+    `&dates=${start}Z/${end}Z`;
+
+  window.open(url, "_blank");
+}
 
 /* ================= Scrolling ================= */
 $("reserveBtn")?.addEventListener("click", () => {

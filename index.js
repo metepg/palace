@@ -64,20 +64,23 @@ $("reserveSubmit").addEventListener("click", submitReservation);
 
 /* ================= Calendar ================= */
 function openCalendar(name, date) {
-  const start = date.toISOString().replace(/[-:]/g, "").split(".")[0];
-  const end = new Date(date.getTime() + 60 * 60 * 1000)
-    .toISOString()
-    .replace(/[-:]/g, "")
-    .split(".")[0];
 
-  const url =
-    "https://calendar.google.com/calendar/render?action=TEMPLATE" +
-    `&text=${encodeURIComponent("Pöytävaraus Mete's Palace")}` +
-    `&details=${encodeURIComponent("Varaus nimellä " + name)}` +
-    `&dates=${start}Z/${end}Z`;
+  const start = date.getTime();
+  const end = start + (60 * 60 * 1000); // +1 hour
+  const title = "Pöytävaraus Mete's Palace";
+  const details = "Varaus nimellä " + name;
 
-  window.open(url, "_blank");
-}
+  // Crucial: Use the intent:// syntax with ACTION_INSERT
+  // This is the most compatible way for modern Chrome/Brave
+  window.location.href = `intent:#Intent;` +
+    `action=android.intent.action.INSERT;` +
+    `type=vnd.android.cursor.dir/event;` +
+    `S.title=${encodeURIComponent(title)};` +
+    `S.description=${encodeURIComponent(details)};` +
+    `l.beginTime=${start};` +
+    `l.endTime=${end};` +
+    `package=com.samsung.android.calendar;` +
+    `end`;}
 
 /* ================= Scrolling ================= */
 $("reserveBtn")?.addEventListener("click", () => {

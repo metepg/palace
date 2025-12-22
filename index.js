@@ -64,24 +64,41 @@ $("reserveSubmit").addEventListener("click", submitReservation);
 
 /* ================= Calendar ================= */
 function openCalendar(name, date) {
+    const title = "Pöytävaraus Mete's Palace";
+    const description = "Varaus nimellä " + name;
 
-  const start = date.getTime();
-  const end = start + (60 * 60 * 1000); // +1 hour
-  const title = "Pöytävaraus Mete's Palace";
-  const details = "Varaus nimellä " + name;
+    // Format dates for ICS (YYYYMMDDTHHMMSSZ)
+    const formatDate = (d) => d.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
+    const start = formatDate(date);
+    const end = formatDate(new Date(date.getTime() + 60 * 60 * 1000));
 
-  // Crucial: Use the intent:// syntax with ACTION_INSERT
-  // This is the most compatible way for modern Chrome/Brave
-  window.location.href = `intent:#Intent;` +
-    `action=android.intent.action.INSERT;` +
-    `type=vnd.android.cursor.dir/event;` +
-    `S.title=${encodeURIComponent(title)};` +
-    `S.description=${encodeURIComponent(details)};` +
-    `l.beginTime=${start};` +
-    `l.endTime=${end};` +
-    `package=com.samsung.android.calendar;` +
-    `end`;}
+    const icsContent = [
+        "BEGIN:VCALENDAR",
+        "VERSION:2.0",
+        "PRODID:-//MetesPalace//NONSGML v1.0//EN",
+        "BEGIN:VEVENT",
+        `SUMMARY:${title}`,
+        `DESCRIPTION:${description}`,
+        `DTSTART:${start}`,
+        `DTEND:${end}`,
+        "END:VEVENT",
+        "END:VCALENDAR"
+    ].join("\n");
 
+    const blob = new Blob([icsContent], { type: "text/calendar;charset=utf-8" });
+    const url = window.URL.createObjectURL(blob);
+
+    // Create a hidden link and click it
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "reservation.ics");
+    document.body.appendChild(link);
+    link.click();
+
+    // Clean up
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+}
 /* ================= Scrolling ================= */
 $("reserveBtn")?.addEventListener("click", () => {
   $("reserveSection")?.scrollIntoView({ behavior: "smooth" });

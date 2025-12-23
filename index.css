@@ -22,9 +22,9 @@
   box-sizing: border-box
 }
 
-html, body {
-  height: 100%
-}
+/*html, body {*/
+/*  height: 100%*/
+/*}*/
 .section-head {
   padding-left: 22px; /* same as .hero-main */
 }

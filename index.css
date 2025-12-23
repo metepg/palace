@@ -53,6 +53,19 @@
 body.reveal > *:not(#gate):not(.toast) {
   animation: reveal 5s ease forwards;
 }
+/* Update this in your CSS */
+body:not(.reveal) {
+  overflow: hidden !important;
+  height: 100vh !important;
+  position: fixed; /* Holds the background steady in Firefox */
+  width: 100%;
+}
+
+body.reveal {
+  overflow: auto !important;
+  height: auto !important;
+  position: relative;
+}
 
 @keyframes reveal {
   from { opacity: 0; }

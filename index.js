@@ -217,9 +217,24 @@ let gateErrorTimer = null;
 const PASSWORD = "Joulu#2025";
 
 function unlockGate() {
+  // 1. Force focus away from the input to prevent "jump to focus"
+  gateInput.blur();
+
+  // 2. Jump to top immediately
+  window.scrollTo(0, 0);
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+
+  // 3. Trigger visual reveal
   document.body.classList.add("reveal");
   gate.classList.add("fade-out");
-  setTimeout(() => gate.remove(), 500);
+
+  // 4. Double-check for browsers like Firefox after a tiny layout shift
+  setTimeout(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, 50);
+
+  setTimeout(() => gate.remove(), 2000);
 }
 
 gateInput.addEventListener("input", () => {

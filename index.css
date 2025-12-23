@@ -22,9 +22,6 @@
   box-sizing: border-box
 }
 
-/*html, body {*/
-/*  height: 100%*/
-/*}*/
 .section-head {
   padding-left: 22px; /* same as .hero-main */
 }
@@ -48,7 +45,7 @@
 
 #gateError {
   position: absolute;
-  bottom: 20%;
+  bottom: 35%;
   color: #c1121f;
   font-size: 1.5rem;
   display: none;

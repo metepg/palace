@@ -48,7 +48,6 @@ window.addEventListener("click", (e) => {
 });
 
 /* ================= Reservation ================= */
-/* ================= Reservation ================= */
 function submitReservation() {
   const name = $("name").value.trim() || "Vierailija";
   const dtValue = $("datetime").value;
@@ -215,7 +214,7 @@ const gateInput = $("gateInput");
 const gateError = $("gateError");
 
 let gateErrorTimer = null;
-const PASSWORD = "testi";
+const PASSWORD = "Joulu#2025";
 
 function unlockGate() {
   document.body.classList.add("reveal");
